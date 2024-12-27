@@ -124,14 +124,12 @@ myApp.get('/api/pending-emis/:userId', (req, res) => {
     dbUse.displayEMI(req,res);
 });
 
-myApp.get('/api/total-debit/:userId', (req, res) => {
-    dbUse.getDebit(req,res);
-});
+// myApp.get('/api/total-debit', (req, res) => {
+//     dbUse.getDebit(req,res);
+// });
+myApp.get('/api/total-debit', dbUse.getDebit);
 
-
-
-
-
+myApp.get('/api/total-expenditure', dbUse.getTotalExpenditure);
 // Logout route
 myApp.post('/logout', (req, res) => {
     req.session.destroy(err => {

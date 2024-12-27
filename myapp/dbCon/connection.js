@@ -294,6 +294,25 @@ function getEmi(req,res){
     });
 
 }
+function getTotalExpenditure(req, res) {
+    const userId = req.session.userID; // Assuming the session contains the logged-in user's ID
+
+    const query = `
+        SELECT IFNULL(SUM(amount), 0) AS totalExpenditure 
+        FROM expenses 
+        WHERE userID = ?;
+    `;
+    
+    con.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Error fetching total expenditure:', err);
+            return res.status(500).json({ error: 'Failed to fetch total expenditure.' });
+        }
+        console.log(results);
+        res.json({ totalExpenditure: results[0].totalExpenditure });
+    });
+}
+
 
 
 
@@ -311,5 +330,6 @@ module.exports = {
     getEmi,
     displayEMI,
     getDebit,
+    getTotalExpenditure,
     display // Ensure display is included here
 };
